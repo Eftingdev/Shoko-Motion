@@ -129,15 +129,48 @@
             100% { transform: translateX(50%); }
         }
 
-        /* --- ESTILOS DE TEXTO Y FADE POR PALABRAS --- */
+        /* --- TÍTULO CON GRADIENTE NEÓN Y FADE --- */
         h1 {
             font-size: 4rem;
             font-weight: 800;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(112, 0, 255, 0.6));
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        /* La magia del gradiente preservada en las palabras individuales */
+        .gradient-word {
             background: linear-gradient(135deg, #ff3377, #a033ff, #33ccff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 15px rgba(112, 0, 255, 0.5));
+            
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(10px);
+            transition: opacity 0.8s var(--ease-out-quint), 
+                        transform 0.8s var(--ease-out-quint), 
+                        filter 0.8s var(--ease-out-quint);
+        }
+
+        .gradient-word.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* --- PÁRRAFO CON FADE POR PALABRAS --- */
+        p {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .word-fade {
@@ -155,16 +188,6 @@
             opacity: 1;
             transform: translateY(0);
             filter: blur(0);
-        }
-
-        p {
-            font-size: 1.25rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 3rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         code {
@@ -322,7 +345,11 @@
     </div>
 
     <div class="container" id="glassContainer">
-        <h1 id="animatedTitle">ShokoMotion</h1>
+        <!-- Título con estructura segura para conservar el gradiente y aplicar fade -->
+        <h1 id="animatedTitle">
+            <span class="gradient-word" style="transition-delay: 0.1s;">Shoko</span><span class="gradient-word" style="transition-delay: 0.15s;">Motion</span>
+        </h1>
+        
         <p id="animatedParagraph">The ultimate CEP extension panel for After Effects. Streamline your animation workflow, manage curves effortlessly, and export libraries in custom <code>.shoko</code> formats.</p>
         
         <div class="features" id="featuresSection">
@@ -352,31 +379,36 @@
     </footer>
 
     <script>
-        // Función segura para envolver palabras sin borrar el contenido original antes de procesar
-        function splitTextIntoWords(element) {
+        // Función específica para el párrafo (respeta las etiquetas <code>)
+        function splitParagraphIntoWords(element) {
+            const htmlContent = element.innerHTML;
+            // Reemplazo limpio manteniendo el bloque intacto
             const text = element.textContent;
             element.innerHTML = '';
             
+            // Dividimos por espacios
             const words = text.split(' ');
             words.forEach((word, index) => {
                 const span = document.createElement('span');
                 span.className = 'word-fade';
                 span.textContent = word + ' ';
-                span.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
+                span.style.transitionDelay = `${0.2 + (index * 0.03)}s`;
                 element.appendChild(span);
             });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Aplicar la animación por palabras al título y párrafo
-            splitTextIntoWords(document.getElementById('animatedTitle'));
-            splitTextIntoWords(document.getElementById('animatedParagraph'));
+            // 1. Preparar el párrafo
+            splitParagraphIntoWords(document.getElementById('animatedParagraph'));
 
-            // 2. Disparar las animaciones globales
+            // 2. Disparar las animaciones de entrada limpiamente
             setTimeout(() => {
                 document.getElementById('glassContainer').classList.add('animate-in');
                 
-                // Activar el fade de todas las palabras
+                // Activar el fade del título (gradient words)
+                document.querySelectorAll('.gradient-word').forEach(el => el.classList.add('visible'));
+                
+                // Activar el fade del párrafo palabra por palabra
                 document.querySelectorAll('.word-fade').forEach(el => el.classList.add('visible'));
                 
                 document.getElementById('featuresSection').classList.add('visible');
