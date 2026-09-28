@@ -10,7 +10,7 @@
 
 * **Advanced Curve & Keyframe Tools:** Clean up and control your keyframe animations effortlessly.
 * **Compact / Laptop Friendly:** Features a smart space-saving layout (including a fast "Trash Can" toggle for delete buttons) built for smaller screens.
-* **Universal Compatibility:** Officially supports After Effects from **CC 2014 (v13.0)** up to **2026 ([13.0, 99.9])**.
+* **Universal Compatibility:** Officially supports After Effects from **CC 2020 (v17.0)** up to **2026 ([17.0, 99.9])**.
 * **Modern UI:** Clean dark-mode interface optimized for video editors.
 
 ---
@@ -26,7 +26,7 @@
 If you prefer manual deployment:
 1. Copy the `ShokoMotion` folder directly into your Adobe CEP extensions directory:
    * **Windows (Global):** `C:\Program Files\Common Files\Adobe\CEP\extensions\`
-2. Ensure **PlayerDebugMode** is enabled in your system registry if you are running unpackaged builds on versions above CC 2014.
+2. Ensure **PlayerDebugMode** is enabled in your system registry if you are running unpackaged builds on versions above CC 2020.
 
 ---
 
@@ -34,7 +34,7 @@ If you prefer manual deployment:
 
 | Host Application | Supported Versions | CEP Engine |
 | :--- | :--- | :--- |
-| **Adobe After Effects** | CC 2014 – 2026 (`13.0` to `99.9`) | CSXS `[5.0, 12.0]` |
+| **Adobe After Effects** | CC 2020 – 2026 (`17.0` to `99.9`) | CSXS `[5.0, 11.0]` |
 
 ---
 
