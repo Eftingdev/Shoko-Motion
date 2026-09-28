@@ -140,7 +140,6 @@
             filter: drop-shadow(0 0 15px rgba(112, 0, 255, 0.5));
         }
 
-        /* Estilo base para cada palabra animada por JS */
         .word-fade {
             display: inline-block;
             opacity: 0;
@@ -353,15 +352,8 @@
     </footer>
 
     <script>
-        // Función para envolver cada palabra en un span con desvanecimiento (fade-in + blur suave)
+        // Función segura para envolver palabras sin borrar el contenido original antes de procesar
         function splitTextIntoWords(element) {
-            // Mantener etiquetas HTML internas como <code> intactas si las hay
-            const htmlContent = element.innerHTML;
-            // Reemplazamos temporalmente el código para que no se rompa al dividir palabras
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlContent;
-            
-            // Procesamiento simple de texto por palabras
             const text = element.textContent;
             element.innerHTML = '';
             
@@ -370,22 +362,21 @@
                 const span = document.createElement('span');
                 span.className = 'word-fade';
                 span.textContent = word + ' ';
-                // Retraso escalonado dinámico por palabra
-                span.style.transitionDelay = `${0.2 + (index * 0.04)}s`;
+                span.style.transitionDelay = `${0.1 + (index * 0.05)}s`;
                 element.appendChild(span);
             });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Preparar textos para animación por palabras
+            // 1. Aplicar la animación por palabras al título y párrafo
             splitTextIntoWords(document.getElementById('animatedTitle'));
             splitTextIntoWords(document.getElementById('animatedParagraph'));
 
-            // 2. Disparar animaciones de entrada al cargar la página
+            // 2. Disparar las animaciones globales
             setTimeout(() => {
                 document.getElementById('glassContainer').classList.add('animate-in');
                 
-                // Activar las clases .visible para que las palabras hagan su fade en cascada
+                // Activar el fade de todas las palabras
                 document.querySelectorAll('.word-fade').forEach(el => el.classList.add('visible'));
                 
                 document.getElementById('featuresSection').classList.add('visible');
